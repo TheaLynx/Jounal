@@ -19,6 +19,7 @@ def save():
     with open(filename, "a", encoding="utf-8") as file:
         file.write(f"{datum}:\n{eintrag}\n\n")
 
+
     return "Eintrag gespeichert! <a href='/'>Zurück</a>"
 
 @app.route("/search", methods=["GET"])
