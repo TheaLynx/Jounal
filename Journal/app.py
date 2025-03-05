@@ -1,10 +1,9 @@
-from flask import Flask, render_template, render_template_string, request
+from flask import Flask, render_template, request
 import datetime
 import os
+import glob
 
 app = Flask(__name__)
-
-TAGEBUCH_DATEI = "tagebuch.txt"
 
 @app.route("/")
 def index():
@@ -20,25 +19,25 @@ def save():
     with open(filename, "a", encoding="utf-8") as file:
         file.write(f"{datum}:\n{eintrag}\n\n")
 
-    return "Eintrag gespeichert!"
+    return "Eintrag gespeichert! <a href='/'>Zurück</a>"
 
 @app.route("/search", methods=["GET"])
 def search():
     query = request.args.get("query", "").lower()
     if not query:
-        return "Bitte gib ein Stichwort ein!"
+        return "Bitte gib ein Stichwort ein! <a href='/'>Zurück</a>"
 
     ergebnisse = []
-    if os.path.exists(TAGEBUCH_DATEI):
-        with open(TAGEBUCH_DATEI, "r", encoding="utf-8") as file:
-            einträge = file.read().split("\n\n") 
+    for file in glob.glob("tagebuch_*.txt"):  
+        with open(file, "r", encoding="utf-8") as f:
+            einträge = f.read().split("\n\n") 
 
             for eintrag in einträge:
                 if query in eintrag.lower():
-                    ergebnisse.append(eintrag)
+                    ergebnisse.append(f"<strong>{file}</strong><br>{eintrag}")
 
     if ergebnisse:
-        return "<h2>Gefundene Einträge:</h2><pre>" + "\n\n".join(ergebnisse) + "</pre><a href='/'>Zurück</a>"
+        return "<h2>Gefundene Einträge:</h2><pre>" + "<br><br>".join(ergebnisse) + "</pre><a href='/'>Zurück</a>"
     else:
         return "Kein Eintrag gefunden. <a href='/'>Zurück</a>"
 
