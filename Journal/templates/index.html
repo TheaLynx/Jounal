@@ -27,6 +27,12 @@
         <textarea name="eintrag" placeholder="Schreibe hier deinen Eintrag..."></textarea><br>
         <button type="submit">Speichern</button>
     </form>
+    
+    <h2>Suche in Tagebucheinträgen</h2>
+    <form action="/search" method="get">
+        <input type="text" name="query" placeholder="Stichwort eingeben...">
+        <button type="submit">Suchen</button>
+    </form>
 
     <script>
         document.getElementById("datum").textContent = new Date().toLocaleDateString();
