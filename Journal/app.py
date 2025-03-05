@@ -9,7 +9,7 @@ app = Flask(__name__)
 def index():
     return render_template("index.html")
 
-@app.route("/save", methods=["GET", "POST"])
+@app.route("/save", methods=["POST"])
 def save():
     eintrag = request.form["eintrag"]
     datum = datetime.date.today().strftime("%Y-%m-%d")
