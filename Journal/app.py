@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-    return open("index.html").read()  # Stellt sicher, dass dein HTML-File im gleichen Verzeichnis liegt
+    return open("index.html").read() 
 
 @app.route("/save", methods=["POST"])
 def save():
