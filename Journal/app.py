@@ -1,13 +1,13 @@
-from flask import Flask, request
+from flask import Flask, render_template, request
 import datetime
 
 app = Flask(__name__)
 
 @app.route("/")
 def index():
-    return open("index.html").read() 
+    return render_template("index.html")
 
-@app.route("/save", methods=["POST"])
+@app.route("/save", methods=["GET", "POST"])
 def save():
     eintrag = request.form["eintrag"]
     datum = datetime.date.today().strftime("%Y-%m-%d")
@@ -17,7 +17,7 @@ def save():
     with open(filename, "a", encoding="utf-8") as file:
         file.write(f"{datum}:\n{eintrag}\n\n")
 
-    return "Eintrag gespeichert! <a href='/'>Zurück</a>"
+    return "Eintrag gespeichert!"
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, use_reloader=False)
