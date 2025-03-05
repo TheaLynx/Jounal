@@ -18,6 +18,7 @@ def save():
         file.write(f"{datum}:\n{eintrag}\n\n")
 
     return "Eintrag gespeichert!"
+    # hier kann ich nun rumdoktorn. Interessant!
 
 if __name__ == "__main__":
     app.run(debug=True, use_reloader=False)
